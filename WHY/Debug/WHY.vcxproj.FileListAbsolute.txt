@@ -1,0 +1,2 @@
+C:\workspace\C\BAEKJOON\WHY\Debug\WHY.exe
+C:\workspace\C\BAEKJOON\WHY\Debug\WHY.pdb
