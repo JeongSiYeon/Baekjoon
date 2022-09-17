@@ -1,15 +1,11 @@
-/*
-P11004_K번째 수
-시간제한: 2초
-메모리 제한: 512MB
-*/
-
 #include <stdio.h>
+#include <time.h>
 #include <stdlib.h>
+
+#define SWAP(a, b, tmp) {tmp=a; a=b; b=tmp;}   //swap을 define으로 함
 
 void quickSort(int *arr, int p, int r);
 int partition(int *arr, int p, int r);
-void swap(int *arr, int i1, int i2);
 
 int main()
 {
@@ -18,15 +14,11 @@ int main()
 
     int *num = (int *)malloc(N*sizeof(int));
     for(int i = 0; i < N; i++){
-        scanf("%d%*c", &num[i]);               // -10^9 <= num <= 10^9
+        scanf("%d%*c", &num[i]);                // -10^9 <= num <= 10^9
     }
 
-    // sort num
-    quickSort(num, 0, N-1);
-
-    // print loc: K
-    printf("%d\n", num[K-1]);                   
-
+    quickSort(num, 0, N-1);                    // sort num
+    printf("%d\n", num[K-1]);                  // print loc: K               
     return 0;
 }
 
@@ -34,7 +26,6 @@ void quickSort(int *arr, int p, int r)
 {
     if(p < r) {
         int q;
-
         q = partition(arr, p, r);
         quickSort(arr, p, q-1);
         quickSort(arr, q+1, r);
@@ -43,24 +34,25 @@ void quickSort(int *arr, int p, int r)
 
 int partition(int *arr, int p, int r)
 {
-    int i = p-1, j = p;                    
-    int pivot = arr[r];
+    int i = p-1, j = p;                          // p랑 j랑 재귀적으로 들어오는거 생각 안하고 첫 번째 입력에 한해서만 함
+    int random, pivot, tmp = 0;  
+    
+    srand(time(NULL));
+    if(p-r+1 == 0)                                // zero division생각안함
+        random = p;
+    else
+        random = rand()%(p-r+1)+p;   
+
+    pivot = arr[random];                           // 고정 피벗은 최악의 경우로 갈 확률 높음 -> random하게
+    SWAP(arr[random], arr[r], tmp);                // 밑에 알고리즘 바꾸기 귀찮아서 그냥 swap함
 
     for(j = p; j < r; j++) {                
         if(arr[j] <= pivot) {
-            swap(arr, ++i, j);
+            i++;
+            SWAP(arr[i], arr[j], tmp);
         }
     }
-    swap(arr, ++i, j);
-
+    i++;
+    SWAP(arr[i], arr[j], tmp);
     return i;
-}
-
-void swap(int *arr, int i1, int i2)
-{
-    int temp;
-    
-    temp = arr[i1];
-    arr[i1] = arr[i2];
-    arr[i2] = temp;
 }
