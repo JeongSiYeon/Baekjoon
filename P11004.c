@@ -21,7 +21,8 @@ int main()
 
     quickSort(num, 0, N-1, K);   
     printf("%d\n", num[K-1]);    
-
+    
+    free(num);
     return 0;
 }
 
