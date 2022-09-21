@@ -37,7 +37,7 @@ int main(void)
     for(i=0; i <= j; i++) {
         if(incre_decre_N[i] < 0)
         {
-            print_increase( start_point-abs(incre_decre_N[i])+1, abs(incre_decre_N[i]) );
+            print_increase( start_point, abs(incre_decre_N[i]) );
             start_point -= abs(incre_decre_N[i])+1;
         }
         else
